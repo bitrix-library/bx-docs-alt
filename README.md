@@ -103,7 +103,7 @@ $arResult = (function (array $list, $p) {
 ### Links for instagram components
 ```php
 
-"https://www.instagram.com/{$this->arParams['INSTAGRAM_USER_NAME']}/?__a=1";
+"https://www.instagram.com/{'INSTAGRAM_USER_NAME'}/?__a=1";
 "https://instagram.com/graphql/query/?query_id=17888483320059182&id={'USER_ID'}&first={'IMAGES_COUNT'}";
 
 ```
