@@ -81,7 +81,7 @@ tree($arResult["SECTIONS"], count($arResult["SECTIONS"]));
 
 ```
 
-### Разбиение массива на несколько
+### Разбиение массива на части
 ```php
 
 $arResult = (function (array $list, $p) {
