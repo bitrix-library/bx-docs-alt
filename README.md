@@ -100,7 +100,7 @@ $arResult = (function (array $list, $p) {
 
 ```
 
-### Links for instagram components
+### Полезные ссылки для компонентов инстаграма
 ```php
 
 "https://www.instagram.com/{'INSTAGRAM_USER_NAME'}/?__a=1";
@@ -108,3 +108,30 @@ $arResult = (function (array $list, $p) {
 
 ```
 
+### Resize image с сохранением оригинала
+```php
+
+foreach($arResult["ITEMS"] as &$arItem) {
+	$arItem["PREVIEW_PICTURE"] = array(
+		"PREVIEW" => CFile::ResizeImageGet($arItem["PREVIEW_PICTURE"]["ID"], array("width" => 1800, "height" => 1000), false, false, false, false, 75),
+		"ORIGINAL" => $arItem["PREVIEW_PICTURE"]
+	);
+}
+
+```
+
+### Получение информации о секции/инфоблоке
+```php
+
+$db_list = CIBlockSection::GetByID($arParams["PARENT_SECTION"]);
+if ($db_el = $db_list->GetNext()) {
+	$arResult["SECTION"] = $db_el;
+}
+unset($db_list);
+
+$db_list = CIBlock::GetByID($arParams["IBLOCK_ID"]);
+if ($db_el = $db_list->GetNext()) {
+	$arResult["IBLOCK"] = $db_el;
+}
+unset($db_list);
+```
