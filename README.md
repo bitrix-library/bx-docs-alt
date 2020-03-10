@@ -1,5 +1,5 @@
-### Составление конструкций из переменных с учетом возможности их отсутствия
-```php 
+### Вывод нескольких элементов в строку с отсеиванием пустых элементов
+```php
 
 /**
  * @param string $delimiter
@@ -23,6 +23,11 @@ function combine(string $delimiter, ...$parts): ?string
 	return $result;
 }
 
+```
+
+### Отсеивание неполных элементов
+```php
+
 /**
  * @param mixed ...$parts
  * @return string|null
@@ -41,7 +46,7 @@ function allOrNothing(...$parts): ?string
 
 ```
 
-### Соединение с lang-файлом Bitrix, лежащим в другой директории
+### Соединение страницы index.php с lang-файлом, лежащим в другой директории
 ```php
 
 use Bitrix\Main\Localization\Loc;
@@ -52,7 +57,7 @@ Loc::getMessage("EXAMPLE");
 
 ```
 
-### Сортировка элементов из catalog.section.list Bitrix
+### Сортировка элементов из catalog.section.list
 ```php
 
 function tree(array &$haystack, int $current): void
@@ -76,10 +81,10 @@ tree($arResult["SECTIONS"], count($arResult["SECTIONS"]));
 
 ```
 
-### Разбиение массива на 3 поочередно
+### Разбиение массива
 ```php
 
-$arResult = (function (Array $list, $p) {
+$arResult = (function (array $list, $p) {
 	$listlen = count($list);
 	$partlen = floor($listlen / $p);
 	$partrem = $listlen % $p;
@@ -95,53 +100,11 @@ $arResult = (function (Array $list, $p) {
 
 ```
 
-### Instagram links for templates
+### Links for instagram components
 ```php
 
-$this->arResult["SOURCE"] = "https://www.instagram.com/{$this->arParams['INSTAGRAM_USER_NAME']}/?__a=1";
-$this->arResult["SOURCE"] = "https://instagram.com/graphql/query/?query_id=17888483320059182&id={$this->arParams['INSTAGRAM_USER_ID']}&first={$this->arParams['INSTAGRAM_IMAGES_COUNT']}";
+"https://www.instagram.com/{$this->arParams['INSTAGRAM_USER_NAME']}/?__a=1";
+"https://instagram.com/graphql/query/?query_id=17888483320059182&id={'USER_ID'}&first={'IMAGES_COUNT'}";
 
 ```
-```js
 
-<script type="application/javascript">
-    `use strict`;
-
-    document.addEventListener(`DOMContentLoaded`, event => {
-        ((button, panel, list) => {
-            if (BX.getCookie(`instagram-panel`) == `open`) {
-                button.classList.remove(`active`);
-                panel.style.display = null;
-            } else if (BX.getCookie(`instagram-panel`) == `close`) {
-                button.classList.add(`active`);
-                panel.style.display = `none`;
-            } else {
-                button.classList.remove(`active`);
-                panel.style.display = null;
-            }
-
-            $.ajax({
-                method: `get`,
-                url: `<?= $arResult["SOURCE"] ?>`,
-                success: (data) => {
-                    try {
-                        for (let el of data.data.user.edge_owner_to_timeline_media.edges) {
-                            list.insertAdjacentHTML(
-                                `beforeend`,
-                                `<li>
-                                    <a href="<?=$arParams["INSTAGRAM_URL"]?>" target="_blank">
-                                        <img src="${el.node.thumbnail_resources[<?=$arParams["INSTAGRAM_THUMBNAIL_RESOURCES_TYPE"]?>].src}">
-                                    </a>
-                                </li>`
-                            )
-                        }
-                    } catch (e) {
-                        console.log(`Instagram component failed: ${e.message}`)
-                    }
-                }
-            });
-        })(document.getElementById(`template`), document.querySelector(`.element`), document.querySelector(`.list`));
-    });
-</script>
-
-```
