@@ -135,3 +135,18 @@ if ($db_el = $db_list->GetNext()) {
 }
 unset($db_list);
 ```
+
+### Получение секций всех элементов без повторений
+```php
+
+foreach ($arResult["ITEMS"] as &$arItem) {
+	if (empty($arResult["SECTIONS"][$arItem["IBLOCK_SECTION_ID"]])) {
+		$db_list = CIBlockSection::GetByID($arItem["IBLOCK_SECTION_ID"]);
+		if ($db_el = $db_list->GetNext()) {
+			$arResult["SECTIONS"][$arItem["IBLOCK_SECTION_ID"]] = array("NAME" => $db_el["NAME"], "SORT" => $db_el["SORT"], "ID" => $arItem["IBLOCK_SECTION_ID"]);
+		}
+		unset($db_list);
+	}
+}
+
+```
