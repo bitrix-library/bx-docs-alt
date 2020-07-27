@@ -46,7 +46,7 @@ function allOrNothing(...$parts): ?string
 
 ```
 
-### Соединение страницы index.php с lang-файлом, лежащим в другой директории
+### Использование lang-файла, лежащего в другой директории на главной,
 ```php
 
 use Bitrix\Main\Localization\Loc;
@@ -127,13 +127,11 @@ $db_list = CIBlockSection::GetByID($arParams["PARENT_SECTION"]);
 if ($db_el = $db_list->GetNext()) {
 	$arResult["SECTION"] = $db_el;
 }
-unset($db_list);
 
 $db_list = CIBlock::GetByID($arParams["IBLOCK_ID"]);
 if ($db_el = $db_list->GetNext()) {
 	$arResult["IBLOCK"] = $db_el;
 }
-unset($db_list);
 ```
 
 ### Получение секций всех элементов без повторений
