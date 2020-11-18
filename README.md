@@ -149,8 +149,64 @@ foreach ($arResult["ITEMS"] as &$arItem) {
 
 ```
 
+### Получение всех элементов highload блока
+```php
+if (CModule::IncludeModule('highloadblock')) {
+    $arHLBlock = Bitrix\Highloadblock\HighloadBlockTable::getById(HL_BLOCK_ID)->fetch();
+    $obEntity = Bitrix\Highloadblock\HighloadBlockTable::compileEntity($arHLBlock);
+    $strEntityDataClass = $obEntity->getDataClass();
+
+    $db_list = $strEntityDataClass::getList(array(
+        'filter' => array('UF_XML_ID' => ARRFILT),
+        'select' => array('*'),
+	'order' => array('ID' => 'ASC'),
+//		'limit' => '1',
+    ));
+
+    while ($db_el = $db_list->Fetch()) {
+        dump($db_el);
+    }
+}
+```
+
+### Удаление всех секций инфоблока
+```php
+if (CModule::IncludeModule('iblock')) {
+    $db_list = CIBlockSection::GetList(
+        array("ID" => "ASC"),
+        array('IBLOCK_ID' => IBLOCK_ID)
+    );
+    while ($db_el = $result->db_list()) {
+        CIBlockSection::Delete($db_el['ID']);
+    }
+}
+```
+
+### Удаление всех элементов инфоблока
+```php
+if (CModule::IncludeModule('iblock')) {
+    $db_list = CIBlockElement::GetList(
+        array("ID" => "ASC"),
+        array('IBLOCK_ID' => IBLOCK_ID)
+    );
+    while ($db_el = $result->db_list()) {
+        CIBlockElement::Delete($db_el['ID']);
+    }
+}
+```
+
+### Обновление сео свойств элемента инфоблока
+```php
+$ipropTemplates = new \Bitrix\Iblock\InheritedProperty\ElementTemplates(IBLOCK_ID, ELEMENT_ID);
+$ipropTemplates->set(array(
+    'ELEMENT_META_TITLE' => 'Example',
+    'ELEMENT_META_KEYWORDS' => 'Example',
+    'ELEMENT_META_DESCRIPTION' => 'Example',
+));
+```
+
 ### Удаление дублей в css файле
-```	
+```
 // node.js
 npm install css-purge -g	
 css-purge -i style.css -o style_purged.css	
