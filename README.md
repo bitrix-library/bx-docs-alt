@@ -148,3 +148,12 @@ foreach ($arResult["ITEMS"] as &$arItem) {
 }
 
 ```
+
+### Удаление дублей в css файле
+```	
+// node.js
+npm install css-purge -g	
+css-purge -i style.css -o style_purged.css	
+// css optimizer
+https://css.github.io/csso/csso.html
+```
