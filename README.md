@@ -213,3 +213,8 @@ css-purge -i style.css -o style_purged.css
 // css optimizer
 https://css.github.io/csso/csso.html
 ```
+
+### Пример ссылок для bitrix:main.share
+```
+https://yandex.ru/dev/share/
+```
