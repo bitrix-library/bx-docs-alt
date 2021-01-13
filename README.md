@@ -8,7 +8,7 @@
  */
 function combine(string $delimiter, ...$parts): ?string
 {
-	$result = '';
+	$result = "";
 	for ($i = 0; $i < count($parts); $i++) {
 		if (strlen($parts[$i]) === 0) {
 			unset($parts[$i]);
@@ -34,7 +34,7 @@ function combine(string $delimiter, ...$parts): ?string
  */
 function allOrNothing(...$parts): ?string
 {
-	$result = '';
+	$result = "";
 	foreach ($parts as $part) {
 		if (strlen($part) === 0) {
 			return false;
@@ -151,16 +151,16 @@ foreach ($arResult["ITEMS"] as &$arItem) {
 
 ### Получение всех элементов highload блока
 ```php
-if (CModule::IncludeModule('highloadblock')) {
+if (CModule::IncludeModule("highloadblock")) {
     $arHLBlock = Bitrix\Highloadblock\HighloadBlockTable::getById(HL_BLOCK_ID)->fetch();
     $obEntity = Bitrix\Highloadblock\HighloadBlockTable::compileEntity($arHLBlock);
     $strEntityDataClass = $obEntity->getDataClass();
 
     $db_list = $strEntityDataClass::getList(array(
-        'filter' => array('UF_XML_ID' => ARRFILT),
-        'select' => array('*'),
-	'order' => array('ID' => 'ASC'),
-//		'limit' => '1',
+        "filter" => array("UF_XML_ID" => ARRFILT),
+        "select" => array("*"),
+	"order" => array("ID" => "ASC"),
+//		"limit" => "1",
     ));
 
     while ($db_el = $db_list->Fetch()) {
@@ -171,26 +171,26 @@ if (CModule::IncludeModule('highloadblock')) {
 
 ### Удаление всех секций инфоблока
 ```php
-if (CModule::IncludeModule('iblock')) {
+if (CModule::IncludeModule("iblock")) {
     $db_list = CIBlockSection::GetList(
         array("ID" => "ASC"),
-        array('IBLOCK_ID' => IBLOCK_ID)
+        array("IBLOCK_ID" => IBLOCK_ID)
     );
     while ($db_el = $result->db_list()) {
-        CIBlockSection::Delete($db_el['ID']);
+        CIBlockSection::Delete($db_el["ID"]);
     }
 }
 ```
 
 ### Удаление всех элементов инфоблока
 ```php
-if (CModule::IncludeModule('iblock')) {
+if (CModule::IncludeModule("iblock")) {
     $db_list = CIBlockElement::GetList(
         array("ID" => "ASC"),
-        array('IBLOCK_ID' => IBLOCK_ID)
+        array("IBLOCK_ID" => IBLOCK_ID)
     );
     while ($db_el = $result->db_list()) {
-        CIBlockElement::Delete($db_el['ID']);
+        CIBlockElement::Delete($db_el["ID"]);
     }
 }
 ```
@@ -199,9 +199,9 @@ if (CModule::IncludeModule('iblock')) {
 ```php
 $ipropTemplates = new \Bitrix\Iblock\InheritedProperty\ElementTemplates(IBLOCK_ID, ELEMENT_ID);
 $ipropTemplates->set(array(
-    'ELEMENT_META_TITLE' => 'Example',
-    'ELEMENT_META_KEYWORDS' => 'Example',
-    'ELEMENT_META_DESCRIPTION' => 'Example',
+    "ELEMENT_META_TITLE" => "Example",
+    "ELEMENT_META_KEYWORDS" => "Example",
+    "ELEMENT_META_DESCRIPTION" => "Example",
 ));
 ```
 
