@@ -212,3 +212,72 @@ https://css.github.io/csso/csso.html
 ```
 https://yandex.ru/dev/share/
 ```
+
+### Событие для изменения Коэффициента единицы измерения товара при обновлении элемента инфоблока
+```php
+$event_manager = EventManager::getInstance();
+$event_manager->AddEventHandler("iblock", "OnAfterIBlockElementUpdate", "handlerOnAfterIBlockElementUpdate");
+
+function handlerOnAfterIBlockElementUpdate($arFields): void
+{
+    if (($arFields["RESULT"] === true) && $arFields["IBLOCK_ID"] === CATALOG_IBLOCK_ID) {
+
+        $event_manager = EventManager::getInstance();
+
+        $event_manager->AddEventHandler("main", "OnAfterEpilog", function () use ($arFields) {
+            $db_elements = CIBlockElement::GetList(
+                array('SORT' => 'ASC'),
+                array(
+                    'ID' => $arFields["ID"],
+                    'IBLOCK_ID' => CATALOG_IBLOCK_ID,
+                    '!PROPERTY_KOLICHESTKO_V_UPAKOVKE_M2' => false,
+                ),
+                false,
+                false,
+                array(
+                    'ID',
+                    'IBLOCK_ID',
+                    'PROPERTY_KOLICHESTKO_V_UPAKOVKE_M2',
+                )
+            );
+
+            if ($db_el = $db_elements->GetNext()) {
+                $db_ratio = CCatalogMeasureRatio::getList(
+                    array('SORT' => 'ASC'),
+                    array(
+                        'IBLOCK_ID' => $db_el['IBLOCK_ID'],
+                        'PRODUCT_ID' => $db_el['ID'],
+                        'IS_DEFAULT' => 'Y'
+                    ),
+                    false,
+                    false,
+                    array(
+                        'ID',
+                        'PRODUCT_ID',
+                        'RATIO',
+                    )
+                );
+                if ($db_ar_ratio = $db_ratio->GetNext()) {
+                    $ratio_id = $db_ar_ratio['ID'];
+                }
+                if (!empty($ratio_id)) {
+                    CCatalogMeasureRatio::update(
+                        $ratio_id,
+                        array(
+                            'PRODUCT_ID' => $db_el['ID'],
+                            'RATIO' => $db_el['PROPERTY_KOLICHESTKO_V_UPAKOVKE_M2_VALUE'],
+                            'IS_DEFAULT' => 'Y'
+                        ));
+                } else {
+                    CCatalogMeasureRatio::add(
+                        array(
+                            'PRODUCT_ID' => $db_el['ID'],
+                            'RATIO' => $db_el['PROPERTY_KOLICHESTKO_V_UPAKOVKE_M2_VALUE'],
+                        )
+                    );
+                }
+            }
+        });
+    }
+}
+```
