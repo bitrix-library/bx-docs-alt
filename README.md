@@ -111,7 +111,7 @@ $arResult = (function (array $list, $p) {
 ### Resize image
 ```php
 
-$picture = CFile::ResizeImageGet(picture, array("width" => 1800, "height" => 1000), false, false, false, false, 75);
+$picture = CFile::ResizeImageGet($picture, array("width" => 1800, "height" => 1000), false, false, false, false, 75);
 
 ```
 
