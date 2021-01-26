@@ -46,7 +46,7 @@ function allOrNothing(...$parts): ?string
 
 ```
 
-### Использование lang-файла, лежащего в другой директории на главной,
+### Использование lang-файла, лежащего в другой директории
 ```php
 
 use Bitrix\Main\Localization\Loc;
@@ -100,7 +100,7 @@ $arResult = (function (array $list, $p) {
 
 ```
 
-### Полезные ссылки для компонентов инстаграма
+### Полезные ссылки для получения информации из инстаграма
 ```php
 
 "https://www.instagram.com/{'INSTAGRAM_USER_NAME'}/?__a=1";
@@ -108,15 +108,10 @@ $arResult = (function (array $list, $p) {
 
 ```
 
-### Resize image с сохранением оригинала
+### Resize image
 ```php
 
-foreach($arResult["ITEMS"] as &$arItem) {
-	$arItem["PREVIEW_PICTURE"] = array(
-		"PREVIEW" => CFile::ResizeImageGet($arItem["PREVIEW_PICTURE"]["ID"], array("width" => 1800, "height" => 1000), false, false, false, false, 75),
-		"ORIGINAL" => $arItem["PREVIEW_PICTURE"]
-	);
-}
+$picture = CFile::ResizeImageGet(picture, array("width" => 1800, "height" => 1000), false, false, false, false, 75);
 
 ```
 
@@ -157,10 +152,9 @@ if (CModule::IncludeModule("highloadblock")) {
     $strEntityDataClass = $obEntity->getDataClass();
 
     $db_list = $strEntityDataClass::getList(array(
-        "filter" => array("UF_XML_ID" => ARRFILT),
+        "filter" => array("UF_XML_ID" => ARRFILTR),
         "select" => array("*"),
-	"order" => array("ID" => "ASC"),
-//		"limit" => "1",
+	"order" => array("ID" => "ASC")
     ));
 
     while ($db_el = $db_list->Fetch()) {
@@ -207,10 +201,10 @@ $ipropTemplates->set(array(
 
 ### Удаление дублей в css файле
 ```
-// node.js
+// Удаление
 npm install css-purge -g	
 css-purge -i style.css -o style_purged.css	
-// css optimizer
+// Оптимизация
 https://css.github.io/csso/csso.html
 ```
 
