@@ -289,3 +289,14 @@ function handlerOnAfterIBlockElementUpdate($arFields): void
     }
 }
 ```
+
+### Настройки .htaccess
+```php
+    #from www to without www
+    RewriteCond %{HTTP_HOST} ^www\.(.*) [NC]
+    RewriteRule ^(.*)$ https://%1/$1 [R=301,L]
+
+    #from many / to single /
+    RewriteCond %{THE_REQUEST} //
+    RewriteRule .* /$0 [R=301,L]
+```
