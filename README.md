@@ -290,6 +290,34 @@ function handlerOnAfterIBlockElementUpdate($arFields): void
 }
 ```
 
+### Поиск введенного слова в блоке
+```js
+      let item_block = document.querySelector('.title-search-result').innerHTML
+
+      if (item_block) {
+        const input = document.getElementById('title-search-input').value
+        const result_text = item_block.match(/>(.*?)</g)
+
+        for (let i = 0; i < result_text.length; i++) {
+          const openTag = '<span class="searchable">'
+          const closeTag = '</span>'
+          const start = result_text[i].search(new RegExp(input, 'i'))
+          if (start !== -1) {
+            const end = start + input.length
+            const inner = result_text[i].substr(start, input.length)
+            const text =
+              result_text[i].substr(0, start)
+              + openTag
+              + inner
+              + closeTag
+              + result_text[i].substr(end)
+            item_block = item_block.replace(result_text[i], text)
+          }
+        }
+      }
+```
+
+
 ### Настройки .htaccess
 ```php
     #from www to without www
