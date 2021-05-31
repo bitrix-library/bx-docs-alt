@@ -170,7 +170,7 @@ if (CModule::IncludeModule("iblock")) {
         array("ID" => "ASC"),
         array("IBLOCK_ID" => IBLOCK_ID)
     );
-    while ($db_el = $result->db_list()) {
+    while ($db_el = $db_list->GetNext()) {
         CIBlockSection::Delete($db_el["ID"]);
     }
 }
@@ -183,7 +183,7 @@ if (CModule::IncludeModule("iblock")) {
         array("ID" => "ASC"),
         array("IBLOCK_ID" => IBLOCK_ID)
     );
-    while ($db_el = $result->db_list()) {
+    while ($db_el = $db_list->GetNext()) {
         CIBlockElement::Delete($db_el["ID"]);
     }
 }
